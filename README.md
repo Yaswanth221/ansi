@@ -1,4 +1,4 @@
-# Day 21 AWS-Ansible-Part-1
+AWS-Ansible-Part-1
 
 ![image](https://github.com/user-attachments/assets/5cec40df-0b9a-4757-8399-d2fbe42fb064)
 
