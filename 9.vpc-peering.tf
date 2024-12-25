@@ -1,11 +1,23 @@
+# Declare data source for the default VPC
+data "aws_vpc" "default_vpc" {
+  # Fetch default VPC by using its ID
+  id = "vpc-08d5ab01a1c3d56a1" # Replace with the actual ID of your default VPC
+}
+
+# Declare data source for the Ansible VPC
+data "aws_vpc" "ansible_vpc" {
+  # Fetch the Ansible VPC by using its ID
+  id = "vpc-0b1be6d8fbd694712" # Replace with the actual ID of your Ansible VPC
+}
+
 # Fetch the route table for the current VPC (public route table)
 data "aws_route_table" "terraform_public" {
-  vpc_id = data.aws_vpc.default_vpc.id # Replace with your default VPC's ID
+  vpc_id = data.aws_vpc.default_vpc.id # Use default VPC ID from the data source
 }
 
 # Fetch the route table for the peer VPC (Ansible VPC route table)
 data "aws_route_table" "ansible_vpc_rt" {
-  vpc_id = data.aws_vpc.ansible_vpc.id # Replace with your peer VPC's ID
+  vpc_id = data.aws_vpc.ansible_vpc.id # Use Ansible VPC ID from the data source
 }
 
 # Resource: VPC Peering Connection
