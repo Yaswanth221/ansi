@@ -3,14 +3,14 @@ data "aws_vpc" "ansible_vpc" {
   id = "vpc-0b1be6d8fbd694712"
 }
 
-# # Fetch the route table using subnet_id, if it exists
-# data "aws_route_table" "ansible_vpc_rt" {
-#   subnet_id = "subnet-0d410dd41581e1303"
-# }
-
+# Fetch the route table using subnet_id, if it exists
 data "aws_route_table" "ansible_vpc_rt" {
-  vpc_id = "vpc-0b1be6d8fbd694712"
+  subnet_id = "subnet-0d410dd41581e1303"
 }
+
+# data "aws_route_table" "ansible_vpc_rt" {
+#   vpc_id = "vpc-0b1be6d8fbd694712"
+# }
 
 # Resource: VPC Peering Connection
 resource "aws_vpc_peering_connection" "ansible-vpc-peering" {
