@@ -8,14 +8,19 @@ data "aws_vpc" "default_vpc" {
   id = aws_vpc.default.id
 }
 
-# Fetch the route table for the current VPC (by vpc_id without tags)
+# Fetch the route table for the current VPC (by vpc_id and filter by tag Name)
 data "aws_route_table" "terraform_public" {
   vpc_id = data.aws_vpc.default_vpc.id
+
+  filter {
+    name   = "tag:Name"
+    values = ["public-route-table"] # Use the tag that matches your public route table
+  }
 }
 
-# Fetch the route table for the peer VPC (if you know the ID)
+# Fetch the route table for the peer VPC (if you know the ID, use it directly)
 data "aws_route_table" "ansible_vpc_rt" {
-  route_table_id = "rtb-0c3d380cc4a1d7339" # Replace with the actual route table ID
+  route_table_id = "rtb-0c3d380cc4a1d7339" # Replace with the actual route table ID of the peer VPC
 }
 
 # Resource: VPC Peering Connection
@@ -40,7 +45,7 @@ resource "aws_vpc_peering_connection" "ansible_vpc_peering" {
 # Route: Add a route from the current VPC to the peer VPC
 resource "aws_route" "peering_to_ansible_vpc" {
   route_table_id            = data.aws_route_table.terraform_public.id
-  destination_cidr_block    = "172.31.0.0/16"
+  destination_cidr_block    = "172.31.0.0/16" # Adjust CIDR block as per peer VPC's CIDR
   vpc_peering_connection_id = aws_vpc_peering_connection.ansible_vpc_peering.id
 
   depends_on = [aws_vpc_peering_connection.ansible_vpc_peering]
@@ -49,7 +54,7 @@ resource "aws_route" "peering_to_ansible_vpc" {
 # Route: Add a route from the peer VPC to the current VPC
 resource "aws_route" "peering_from_ansible_vpc" {
   route_table_id            = data.aws_route_table.ansible_vpc_rt.id
-  destination_cidr_block    = "10.37.0.0/16"
+  destination_cidr_block    = "10.37.0.0/16" # Adjust CIDR block as per current VPC's CIDR
   vpc_peering_connection_id = aws_vpc_peering_connection.ansible_vpc_peering.id
 
   depends_on = [aws_vpc_peering_connection.ansible_vpc_peering]
