@@ -5,7 +5,7 @@ data "aws_vpc" "ansible_vpc" {
 
 # Fetch the route table using subnet_id, if it exists
 data "aws_route_table" "ansible_vpc_rt" {
-  subnet_id = "subnet-0960301bfbe2d46fa"
+  subnet_id = "subnet-0d410dd41581e1303"
 }
 
 # Resource: VPC Peering Connection
