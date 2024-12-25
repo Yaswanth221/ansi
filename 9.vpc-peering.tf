@@ -8,19 +8,14 @@ data "aws_vpc" "default_vpc" {
   id = aws_vpc.default.id
 }
 
-# Fetch the route table for the current VPC (ensure the correct tag is used)
+# Fetch the route table for the current VPC (by vpc_id without tags)
 data "aws_route_table" "terraform_public" {
   vpc_id = data.aws_vpc.default_vpc.id
-
-  filter {
-    name   = "tag:Name"
-    values = ["public-route-table"] # Update this tag if necessary
-  }
 }
 
-# Fetch the route table for the peer VPC
+# Fetch the route table for the peer VPC (if you know the ID)
 data "aws_route_table" "ansible_vpc_rt" {
-  route_table_id = "rtb-0c3d380cc4a1d7339"
+  route_table_id = "rtb-0c3d380cc4a1d7339" # Replace with the actual route table ID
 }
 
 # Resource: VPC Peering Connection
