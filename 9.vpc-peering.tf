@@ -18,9 +18,9 @@ data "aws_route_table" "terraform_public" {
   }
 }
 
-# Fetch the route table for the peer VPC (if you know the ID, use it directly)
+# Fetch the route table for the peer VPC (using the known route table ID)
 data "aws_route_table" "ansible_vpc_rt" {
-  route_table_id = "rtb-0c3d380cc4a1d7339" # Replace with the actual route table ID of the peer VPC
+  route_table_id = "rtb-0c3d380cc4a1d7339" # Use the route table ID from the describe command
 }
 
 # Resource: VPC Peering Connection
