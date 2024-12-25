@@ -29,17 +29,17 @@ resource "aws_vpc_peering_connection" "ansible_vpc_peering" {
 
 # Route: Add a route from the default VPC to the Ansible VPC
 resource "aws_route" "peering_to_ansible_vpc" {
-  route_table_id            = "rtb-0c61f7acbcc8a7460" # Replace with the actual ID of the public route table in the default VPC
-  destination_cidr_block    = "10.37.0.0/16"          # Route to peer VPC CIDR block
+  route_table_id            = "rtb-0c61f7acbcc8a7460" # Route table ID of the Default VPC
+  destination_cidr_block    = "172.31.0.0/16"         # Route to Default VPC CIDR block
   vpc_peering_connection_id = aws_vpc_peering_connection.ansible_vpc_peering.id
 
   depends_on = [aws_vpc_peering_connection.ansible_vpc_peering]
 }
 
-# Route: Add a route from the Ansible VPC to the default VPC
+# Route: Add a route from the Ansible VPC to the Default VPC
 resource "aws_route" "peering_from_ansible_vpc" {
-  route_table_id            = "rtb-01fd54f122ceea812" # Replace with the actual ID of the route table in the Ansible VPC
-  destination_cidr_block    = "172.31.0.0/16"         # Route to current VPC CIDR block
+  route_table_id            = "rtb-0c3d380cc4a1d7339" # Route table ID of the Ansible VPC
+  destination_cidr_block    = "10.37.0.0/16"          # Route to Ansible VPC CIDR block
   vpc_peering_connection_id = aws_vpc_peering_connection.ansible_vpc_peering.id
 
   depends_on = [aws_vpc_peering_connection.ansible_vpc_peering]
