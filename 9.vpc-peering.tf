@@ -1,3 +1,13 @@
+# Fetch the peer VPC (Ansible VPC)
+data "aws_vpc" "ansible_vpc" {
+  id = "vpc-0b1be6d8fbd694712" # Replace with actual peer VPC ID
+}
+
+# Fetch the default VPC (the current VPC)
+data "aws_vpc" "default_vpc" {
+  id = "vpc-xxxxxxxx" # Replace with the actual default VPC ID
+}
+
 # Resource: VPC Peering Connection
 resource "aws_vpc_peering_connection" "ansible_vpc_peering" {
   peer_vpc_id = data.aws_vpc.ansible_vpc.id
