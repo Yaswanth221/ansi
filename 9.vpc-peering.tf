@@ -8,13 +8,13 @@ data "aws_vpc" "default_vpc" {
   id = aws_vpc.default.id
 }
 
-# Fetch the route table for the current VPC (replace filter if required)
+# Fetch the route table for the current VPC (ensure the correct tag is used)
 data "aws_route_table" "terraform_public" {
   vpc_id = data.aws_vpc.default_vpc.id
 
   filter {
     name   = "tag:Name"
-    values = ["public-route-table"] # Replace with the tag value of your route table
+    values = ["public-route-table"] # Update this tag if necessary
   }
 }
 
