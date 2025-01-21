@@ -4,14 +4,14 @@ data "aws_vpc" "ansible_vpc" {
 }
 
 # Declare data source for the Ansible VPC
-data "aws_routetable" "ansible_vpc_rt" {
+data "aws_route_table" "ansible_vpc_rt" {
   subnet_id = "subnet-0db61983f3b7099dc" # Replace with the actual ID of your Ansible VPC
 }
 
 # Resource: VPC Peering Connection
 resource "aws_vpc_peering_connection" "ansible_vpc_peering" {
   peer_vpc_id = data.aws_vpc.ansible_vpc.id
-  vpc_id      = aws_vpc.default_vpc.id
+  vpc_id      = aws_vpc.default.id
   auto_accept = true
 
   accepter {
