@@ -12,7 +12,7 @@ resource "aws_instance" "webservers" {
   instance_type               = lookup(var.instance_type, local.new_environment)
   key_name                    = var.key_name
   subnet_id                   = element(aws_subnet.public-subnets.*.id, count.index)
-  vpc_security_group_ids      = ["${aws_security_group.allow_all.id}"]
+  vpc_security_group_ids      = ["${aws_security_group.allow_specific.id}"]
   associate_public_ip_address = true
   tags = {
     Name              = "${var.vpc_name}-PublicServer-${count.index + 1}"
