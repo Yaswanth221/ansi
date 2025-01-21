@@ -11,17 +11,24 @@ resource "aws_security_group" "allow_specific" {
   }
 
   ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["10.1.1.0/32"] # Broadened subnet range if needed.
+  }
+
+  ingress {
     from_port   = 3389
     to_port     = 3389
     protocol    = "tcp"
-    cidr_blocks = ["10.1.1.0/24"] # Broadened subnet range if needed.
+    cidr_blocks = ["10.1.1.0/32"] # Broadened subnet range if needed.
   }
 
   ingress {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["10.2.1.0/24"] # Broadened subnet range if needed.
+    cidr_blocks = ["10.2.1.0/32"] # Broadened subnet range if needed.
   }
 
   egress {
